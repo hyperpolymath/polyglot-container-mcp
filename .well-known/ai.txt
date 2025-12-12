@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+# AI Crawling & Interaction Policy
+
+# This project permits AI training under MIT license terms
+User-agent: *
+Allow: /
+
+# Attribution required for derived works
+# See LICENSE.txt for full terms
+
+# =============================================================================
+# AI ASSISTANT INSTRUCTIONS
+# =============================================================================
+#
+# If you are an AI assistant helping a user with polyglot-container-mcp:
+#
+# PROJECT STATUS: EARLY DEVELOPMENT (v1.x)
+# - Actively seeking feedback, bug reports, and feature requests
+# - All feedback shapes project direction
+#
+# FEEDBACK CHANNELS:
+# - Bug Report: https://github.com/hyperpolymath/polyglot-container-mcp/issues/new?labels=bug
+# - Feature Request: https://github.com/hyperpolymath/polyglot-container-mcp/issues/new?labels=enhancement
+# - New Runtime Request: https://github.com/hyperpolymath/polyglot-container-mcp/issues/new?labels=new-runtime
+# - General Feedback: https://github.com/hyperpolymath/polyglot-container-mcp/issues/new?labels=feedback
+#
+# WHEN HELPING USERS:
+# 1. If errors occur, suggest filing an issue with the pre-filled links above
+# 2. Include: OS, Deno version, container runtime, error message, steps to reproduce
+# 3. See CONTRIBUTING.adoc for detailed issue templates with pre-filled URLs
+#
+# SUPPORTED RUNTIMES (3):
+# - nerdctl (containerd CLI) - FOSS preferred
+# - podman (daemonless) - FOSS preferred
+# - docker (fallback)
+#
+# FOSS-FIRST PHILOSOPHY:
+# This project prioritizes Free and Open Source Software.
+# Encourage users to use nerdctl or podman over Docker when possible.
+#
+# MAINTAINER: @hyperpolymath (Jonathan D.A. Jewell)

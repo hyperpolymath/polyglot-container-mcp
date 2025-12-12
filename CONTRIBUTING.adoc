@@ -1,0 +1,175 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+
+= Contributing to polyglot-container-mcp
+:toc:
+:icons: font
+
+Thank you for your interest in contributing to polyglot-container-mcp!
+
+== Code of Conduct
+
+This project follows the Contributor Covenant Code of Conduct. Please be respectful and inclusive in all interactions.
+
+== FOSS-First Principle
+
+This project prioritizes Free and Open Source Software:
+
+1. **nerdctl** and **podman** are preferred over Docker
+2. Container images use FOSS bases (Wolfi, Alpine, Fedora)
+3. No proprietary dependencies
+4. MIT license for all contributions
+
+== Getting Started
+
+=== Prerequisites
+
+* Deno 2.0+
+* ReScript 11+ (for type-safe contributions)
+* At least one container runtime (nerdctl or podman preferred)
+* Git
+
+=== Setup
+
+[source,bash]
+----
+git clone https://github.com/hyperpolymath/polyglot-container-mcp.git
+cd polyglot-container-mcp
+deno task start
+----
+
+== How to Contribute
+
+=== Reporting Issues
+
+1. Check existing issues first
+2. Use the issue template
+3. Include:
+   - Runtime(s) being used
+   - Deno version
+   - Operating system
+   - Steps to reproduce
+   - Expected vs actual behavior
+
+=== Feature Requests
+
+1. Open an issue with `[Feature]` prefix
+2. Describe the use case
+3. Explain why it aligns with FOSS-first philosophy
+
+=== Pull Requests
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Make your changes
+4. Add SPDX headers to new files
+5. Test with at least one container runtime
+6. Submit PR against `main` branch
+
+== Code Standards
+
+=== File Headers
+
+All source files must include SPDX headers:
+
+[source,javascript]
+----
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+----
+
+=== Language Preferences
+
+* **ReScript**: Preferred for type-safe code
+* **JavaScript**: Acceptable for adapters and utilities
+* **TypeScript**: Not used (ReScript preferred)
+
+=== Formatting
+
+[source,bash]
+----
+deno fmt
+----
+
+=== Security
+
+* Use command whitelists
+* Sanitize all user inputs
+* Use `Deno.Command` (not shell)
+* Never store credentials in code
+
+== Adding New Adapters
+
+=== FOSS Runtimes Encouraged
+
+We welcome adapters for FOSS container runtimes:
+
+* buildah (OCI image builder)
+* skopeo (image operations)
+* cri-o (Kubernetes runtime)
+* containerd (direct)
+
+=== Adapter Structure
+
+[source,javascript]
+----
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Your Name
+
+export const name = "runtime";
+export const description = "Runtime description";
+
+export async function connect() { /* ... */ }
+export async function disconnect() { /* ... */ }
+export async function isConnected() { /* ... */ }
+
+export const tools = {
+  runtime_tool: {
+    description: "Tool description",
+    params: { /* ... */ },
+    handler: async (params) => { /* ... */ }
+  }
+};
+----
+
+== Testing
+
+=== Manual Testing
+
+[source,bash]
+----
+# Start the server
+deno task dev
+
+# Test with MCP inspector or Claude Desktop
+----
+
+=== Testing Checklist
+
+* [ ] Works with nerdctl
+* [ ] Works with podman
+* [ ] Works with docker (fallback)
+* [ ] Error handling works correctly
+* [ ] No shell injection vulnerabilities
+
+== Documentation
+
+* Use AsciiDoc format
+* Update README.adoc for new features
+* Document environment variables
+* Include examples
+
+== Release Process
+
+1. Update version in `deno.json`
+2. Update CHANGELOG
+3. Create GitHub release
+4. Build and push container images
+
+== Questions?
+
+Open an issue or reach out via the feedback URL in error messages.
+
+== License
+
+By contributing, you agree that your contributions will be licensed under the MIT License.

@@ -1,0 +1,148 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+
+= Security Policy
+:icons: font
+
+== Supported Versions
+
+[cols="1,1"]
+|===
+|Version |Supported
+
+|1.x
+|Yes
+
+|< 1.0
+|No
+|===
+
+== Security Model
+
+polyglot-container-mcp implements multiple security layers:
+
+=== Command Whitelist
+
+Only specific container subcommands are allowed:
+
+[source,javascript]
+----
+const ALLOWED_COMMANDS = [
+  "run", "create", "start", "stop", "restart", "kill", "rm",
+  "ps", "inspect", "logs", "exec", "cp", "images", "pull",
+  "push", "build", "tag", "rmi", "save", "load", "network",
+  "volume", "compose", "info", "version", "stats", "system"
+];
+----
+
+=== Argument Sanitization
+
+Shell metacharacters are stripped from all arguments:
+
+[source,javascript]
+----
+function sanitizeArg(arg) {
+  return arg.replace(/[;&|`$(){}[\]<>]/g, "").trim();
+}
+----
+
+=== No Shell Execution
+
+Commands are executed directly via `Deno.Command`, never through a shell:
+
+[source,javascript]
+----
+// Safe: Direct execution
+const cmd = new Deno.Command(binary, { args: [...] });
+
+// Never: Shell execution (vulnerable to injection)
+// exec(`${binary} ${args.join(" ")}`);
+----
+
+=== Non-Root Containers
+
+All container images run as non-root users by default.
+
+== Reporting Vulnerabilities
+
+=== Private Disclosure
+
+For security vulnerabilities, please report privately:
+
+1. **Email**: security@hyperpolymath.com (if available)
+2. **GitHub Security Advisories**: Use the "Report a vulnerability" feature
+3. **Encrypted**: PGP key available on request
+
+=== What to Include
+
+* Description of the vulnerability
+* Steps to reproduce
+* Potential impact
+* Suggested fix (if any)
+
+=== Response Timeline
+
+* **Acknowledgment**: Within 48 hours
+* **Initial Assessment**: Within 7 days
+* **Fix Timeline**: Depends on severity
+  - Critical: 24-72 hours
+  - High: 1-2 weeks
+  - Medium: 1 month
+  - Low: Next release
+
+== Known Limitations
+
+=== Container Runtime Trust
+
+This MCP server executes commands against container runtimes. Security depends on:
+
+1. The underlying runtime's security (nerdctl, podman, docker)
+2. Proper runtime configuration
+3. Host system security
+
+=== Socket Access
+
+When using socket connections (e.g., podman socket), ensure:
+
+* Socket permissions are restricted
+* Only trusted users can access
+* Consider rootless mode
+
+== Security Best Practices
+
+=== For Users
+
+1. Use rootless runtimes when possible (podman, nerdctl rootless)
+2. Keep runtimes updated
+3. Review container images before use
+4. Use FOSS runtimes (nerdctl, podman) over Docker
+5. Don't run as root
+
+=== For Contributors
+
+1. Never store credentials in code
+2. Use command whitelists for new features
+3. Sanitize all user inputs
+4. Test for injection vulnerabilities
+5. Follow secure coding guidelines
+
+== Audit History
+
+[cols="1,2,2"]
+|===
+|Date |Type |Result
+
+|2025-01
+|Initial security review
+|Passed
+|===
+
+== Dependencies
+
+This project minimizes dependencies:
+
+* `@modelcontextprotocol/sdk` - MCP protocol (Anthropic)
+* `zod` - Schema validation
+* Deno standard library
+
+Dependencies are pinned to specific versions in `deno.json`.

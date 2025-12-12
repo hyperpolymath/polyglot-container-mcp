@@ -1,0 +1,50 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+
+= Maintainers
+
+== Current Maintainers
+
+[cols="2,3,2"]
+|===
+|Name |Role |Contact
+
+|Jonathan D.A. Jewell
+|Lead Maintainer
+|https://github.com/hyperpolymath[@hyperpolymath]
+|===
+
+== Responsibilities
+
+=== Lead Maintainer
+
+* Overall project direction
+* Security vulnerability handling
+* Release management
+* Final PR approval for major changes
+
+=== Contributors
+
+Contributors with significant ongoing involvement may be added as maintainers.
+
+== Becoming a Maintainer
+
+Maintainers are added based on:
+
+1. Consistent, quality contributions
+2. Alignment with FOSS-first philosophy
+3. Understanding of security model
+4. Availability for code review
+
+To be considered, contribute regularly and express interest via GitHub issues.
+
+== Decision Making
+
+* **Minor changes**: Any maintainer can approve
+* **Major changes**: Lead maintainer approval required
+* **Security fixes**: Lead maintainer handles disclosure
+
+== Contact
+
+* GitHub Issues: https://github.com/hyperpolymath/polyglot-container-mcp/issues
+* Security: See link:SECURITY.adoc[SECURITY.adoc]

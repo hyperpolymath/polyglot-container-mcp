@@ -1,0 +1,44 @@
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+
+# polyglot-container-mcp - Fedora Base
+# Fedora Minimal with native podman support
+
+FROM registry.fedoraproject.org/fedora-minimal:41
+
+LABEL org.opencontainers.image.title="polyglot-container-mcp"
+LABEL org.opencontainers.image.description="Multi-runtime container management MCP server (nerdctl, podman, docker)"
+LABEL org.opencontainers.image.version="1.0.0-fedora"
+LABEL org.opencontainers.image.authors="Jonathan D.A. Jewell"
+LABEL org.opencontainers.image.source="https://github.com/hyperpolymath/polyglot-container-mcp"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.base.name="registry.fedoraproject.org/fedora-minimal:41"
+LABEL dev.mcp.server="true"
+
+# Install Deno via direct download (Deno not in Fedora repos yet)
+RUN microdnf install -y ca-certificates curl unzip && \
+    curl -fsSL https://deno.land/install.sh | sh && \
+    mv /root/.deno/bin/deno /usr/local/bin/ && \
+    rm -rf /root/.deno && \
+    microdnf remove -y curl unzip && \
+    microdnf clean all
+
+# Create non-root user
+RUN useradd -u 1000 -m mcp
+WORKDIR /app
+
+# Copy application files
+COPY --chown=mcp:mcp deno.json package.json ./
+COPY --chown=mcp:mcp index.js ./
+COPY --chown=mcp:mcp adapters/ ./adapters/
+COPY --chown=mcp:mcp src/ ./src/
+COPY --chown=mcp:mcp lib/ ./lib/ 2>/dev/null || true
+
+# Cache dependencies
+RUN deno cache --config=deno.json index.js
+
+USER mcp
+
+ENV CONTAINER_RUNTIME=auto
+
+ENTRYPOINT ["deno", "run", "--allow-run", "--allow-read", "--allow-env", "index.js"]

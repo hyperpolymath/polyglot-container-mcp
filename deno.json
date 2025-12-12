@@ -1,0 +1,21 @@
+{
+  "name": "@hyperpolymath/polyglot-container-mcp",
+  "version": "1.0.0",
+  "description": "Unified MCP server for container runtimes (nerdctl, podman, docker)",
+  "license": "MIT",
+  "exports": "./index.js",
+  "tasks": {
+    "start": "deno run --allow-run --allow-read --allow-env index.js",
+    "dev": "deno run --watch --allow-run --allow-read --allow-env index.js",
+    "res:build": "npx rescript build",
+    "res:watch": "npx rescript build -w"
+  },
+  "imports": {
+    "@modelcontextprotocol/sdk/server/mcp.js": "npm:@modelcontextprotocol/sdk@1.24.3/server/mcp.js",
+    "@modelcontextprotocol/sdk/server/stdio.js": "npm:@modelcontextprotocol/sdk@1.24.3/server/stdio.js",
+    "@modelcontextprotocol/sdk/": "npm:@modelcontextprotocol/sdk@1.24.3/"
+  },
+  "compilerOptions": {
+    "lib": ["deno.window", "deno.unstable"]
+  }
+}

@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+
+# Smithery Registry Configuration
+# https://smithery.ai
+
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      containerRuntime:
+        type: string
+        description: "Preferred runtime: auto, nerdctl, podman, docker"
+        default: "auto"
+        enum: ["auto", "nerdctl", "podman", "docker"]
+      nerdctlPath:
+        type: string
+        description: "Path to nerdctl binary"
+      podmanPath:
+        type: string
+        description: "Path to podman binary"
+      dockerPath:
+        type: string
+        description: "Path to docker binary"
+  commandFunction: |
+    (config) => ({
+      command: "deno",
+      args: ["run", "--allow-run", "--allow-read", "--allow-env", "index.js"],
+      env: {
+        CONTAINER_RUNTIME: config.containerRuntime || "auto",
+        ...(config.nerdctlPath && { NERDCTL_PATH: config.nerdctlPath }),
+        ...(config.podmanPath && { PODMAN_PATH: config.podmanPath }),
+        ...(config.dockerPath && { DOCKER_PATH: config.dockerPath })
+      }
+    })

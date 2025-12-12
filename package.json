@@ -1,0 +1,9 @@
+{
+  "name": "polyglot-container-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "rescript": "^11.1.0"
+  }
+}

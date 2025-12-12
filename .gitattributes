@@ -1,0 +1,67 @@
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# ============================================================
+# ReScript - PRIMARY LANGUAGE
+# ============================================================
+*.res text eol=lf linguist-language=ReScript
+*.resi text eol=lf linguist-language=ReScript
+
+# Compiled ReScript output - mark as generated (excluded from stats)
+lib/** linguist-generated=true
+*.res.js linguist-generated=true
+
+# ============================================================
+# JavaScript - LEGACY (being phased out in v2.0.0)
+# ============================================================
+*.js text eol=lf
+*.mjs text eol=lf
+*.json text eol=lf
+
+# Mark legacy JS adapters as vendored (reduced weight in stats)
+adapters/*.js linguist-vendored=true
+
+# ============================================================
+# Documentation (excluded from language stats)
+# ============================================================
+*.md text eol=lf linguist-documentation=true
+*.adoc text eol=lf linguist-documentation=true
+*.txt text eol=lf linguist-documentation=true
+
+# Scheme state files are documentation, not executable code
+*.scm text eol=lf linguist-documentation=true
+
+# ============================================================
+# Configuration
+# ============================================================
+*.yml text eol=lf linguist-detectable=false
+*.yaml text eol=lf linguist-detectable=false
+*.toml text eol=lf linguist-detectable=false
+.gitignore text eol=lf
+.gitattributes text eol=lf
+justfile text eol=lf linguist-detectable=false
+rescript.json text eol=lf linguist-detectable=false
+package.json text eol=lf linguist-detectable=false
+deno.json text eol=lf linguist-detectable=false
+Containerfile text eol=lf linguist-detectable=false
+Containerfile.* text eol=lf linguist-detectable=false
+
+# Shell scripts
+*.sh text eol=lf
+
+# ============================================================
+# Generated/Artifacts (excluded from stats)
+# ============================================================
+node_modules/** linguist-generated=true
+package-lock.json linguist-generated=true
+deno.lock linguist-generated=true
+
+# ============================================================
+# Binary files
+# ============================================================
+*.tar binary
+*.gz binary
+*.zip binary

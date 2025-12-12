@@ -1,0 +1,165 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+= Directory Submission Materials
+:toc:
+:icons: font
+
+[IMPORTANT]
+====
+*EARLY DEVELOPMENT* — This project actively welcomes feedback, bug reports, and feature requests.
+====
+
+== Unified Submission Info
+
+=== Short Description (< 100 chars)
+----
+Multi-runtime container MCP server. nerdctl, podman, docker with FOSS-first approach.
+----
+
+=== Medium Description (< 300 chars)
+----
+Unified MCP server providing access to 3 container runtimes (nerdctl, podman, docker) through 95+ tools. FOSS-first approach prioritizing nerdctl and podman. Supports nested containers, compose, networks, volumes. Built with Deno and ReScript.
+----
+
+=== Full Description
+----
+polyglot-container-mcp is a unified Model Context Protocol (MCP) server that provides AI assistants with seamless access to multiple container runtimes through a single, consistent interface.
+
+**Supported Runtimes:**
+- **nerdctl**: containerd CLI (FOSS preferred)
+- **podman**: Daemonless container engine (FOSS preferred)
+- **docker**: Docker CLI (fallback for compatibility)
+
+**Features:**
+- 95+ container management tools exposed via MCP
+- FOSS-first: nerdctl and podman preferred over Docker
+- Nested container support (DinD, podman-in-podman)
+- Container, image, network, volume, compose operations
+- Multiple FOSS base images (Wolfi, Alpine, Fedora)
+- Type-safe ReScript core
+
+**Installation:**
+```bash
+# Direct
+deno run --allow-run --allow-read --allow-env \
+  https://raw.githubusercontent.com/hyperpolymath/polyglot-container-mcp/main/index.js
+
+# Container
+podman run --rm -it ghcr.io/hyperpolymath/polyglot-container-mcp:wolfi
+```
+----
+
+=== Tags/Categories
+----
+container, docker, podman, nerdctl, containerd, devops, mcp, deno, foss, kubernetes, orchestration
+----
+
+=== Links
+[cols="1,3"]
+|===
+|Repository |https://github.com/hyperpolymath/polyglot-container-mcp
+|Container |ghcr.io/hyperpolymath/polyglot-container-mcp
+|Documentation |https://github.com/hyperpolymath/polyglot-container-mcp/blob/main/README.adoc
+|Issues |https://github.com/hyperpolymath/polyglot-container-mcp/issues
+|License |MIT
+|===
+
+== Directory-Specific Submissions
+
+=== 1. PulseMCP (pulsemcp.com)
+[cols="1,3"]
+|===
+|URL |https://pulsemcp.com/submit
+|Name |polyglot-container-mcp
+|Description |Multi-runtime container MCP server (nerdctl, podman, docker)
+|Repository |https://github.com/hyperpolymath/polyglot-container-mcp
+|Categories |DevOps, Infrastructure, Containers
+|Status |Early Development - feedback welcome!
+|===
+
+=== 2. Smithery (smithery.ai)
+[cols="1,3"]
+|===
+|URL |https://smithery.ai/submit
+|Name |polyglot-container-mcp
+|Description |Unified MCP server for container runtimes
+|GitHub |hyperpolymath/polyglot-container-mcp
+|Installation |`deno run --allow-run --allow-read --allow-env index.js`
+|===
+
+=== 3. MCP.so
+[cols="1,3"]
+|===
+|URL |https://mcp.so/submit
+|Name |polyglot-container-mcp
+|Author |hyperpolymath
+|Description |Manage containers via nerdctl, podman, or docker
+|Tags |container, docker, podman, nerdctl, devops
+|===
+
+=== 4. Cursor Directory (cursor.directory)
+[cols="1,3"]
+|===
+|URL |https://cursor.directory/mcp
+|Name |polyglot-container-mcp
+|Description |Multi-runtime container MCP server (3 runtimes, 95+ tools)
+|Install Command |Clone repo, run `deno task start`
+|===
+
+=== 5. MCPServers.org
+[cols="1,3"]
+|===
+|URL |https://mcpservers.org/submit
+|Name |polyglot-container-mcp
+|Description |FOSS-first container management MCP server
+|GitHub URL |https://github.com/hyperpolymath/polyglot-container-mcp
+|===
+
+== Submission Status Tracking
+
+[cols="1,1,1,2"]
+|===
+|Directory |Submitted |Status |Notes
+
+|PulseMCP
+|Pending
+|-
+|Web form at pulsemcp.com/servers
+
+|Smithery
+|Ready
+|-
+|smithery.yaml created - run `smithery login && smithery publish`
+
+|MCP.so
+|Pending
+|-
+|Submit via GitHub issue
+
+|Cursor Directory
+|Pending
+|-
+|Submit via GitHub issue
+
+|MCPServers.org
+|Pending
+|-
+|Submit via GitHub issue
+|===
+
+== Early Development Notice
+
+Include in all submissions:
+
+[IMPORTANT]
+====
+This project is in active v1.x development. We enthusiastically welcome:
+
+* Bug reports and issues
+* Feature requests and ideas
+* Container runtime suggestions
+* Integration feedback
+* Documentation improvements
+
+Your feedback directly shapes this project! File issues at: https://github.com/hyperpolymath/polyglot-container-mcp/issues
+====

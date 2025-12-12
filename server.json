@@ -1,0 +1,83 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/mcp-registry/main/schemas/server.schema.json",
+  "name": "polyglot-container-mcp",
+  "description": "Multi-runtime container management MCP server supporting nerdctl, podman, and docker with FOSS-first approach",
+  "version": "1.0.0",
+  "author": {
+    "name": "Jonathan D.A. Jewell",
+    "url": "https://github.com/hyperpolymath"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyperpolymath/polyglot-container-mcp"
+  },
+  "homepage": "https://github.com/hyperpolymath/polyglot-container-mcp",
+  "bugs": "https://github.com/hyperpolymath/polyglot-container-mcp/issues",
+  "keywords": [
+    "mcp",
+    "containers",
+    "nerdctl",
+    "podman",
+    "docker",
+    "containerd",
+    "foss",
+    "devops",
+    "kubernetes"
+  ],
+  "categories": ["devops", "containers", "infrastructure"],
+  "runtime": {
+    "type": "deno",
+    "version": ">=2.0.0"
+  },
+  "installation": {
+    "deno": {
+      "command": "deno",
+      "args": ["run", "--allow-run", "--allow-read", "--allow-env", "index.js"]
+    },
+    "container": {
+      "image": "ghcr.io/hyperpolymath/polyglot-container-mcp:latest"
+    }
+  },
+  "configuration": {
+    "env": {
+      "CONTAINER_RUNTIME": {
+        "description": "Preferred runtime: auto, nerdctl, podman, docker",
+        "default": "auto",
+        "required": false
+      },
+      "NERDCTL_PATH": {
+        "description": "Path to nerdctl binary",
+        "required": false
+      },
+      "PODMAN_PATH": {
+        "description": "Path to podman binary",
+        "required": false
+      },
+      "DOCKER_PATH": {
+        "description": "Path to docker binary",
+        "required": false
+      }
+    }
+  },
+  "tools": {
+    "count": 95,
+    "categories": {
+      "meta": ["container_list", "container_detect", "container_prefer", "container_help", "container_version"],
+      "nerdctl": 30,
+      "podman": 30,
+      "docker": 30
+    }
+  },
+  "features": [
+    "Multi-runtime support (nerdctl, podman, docker)",
+    "FOSS-first approach",
+    "Auto-detection of available runtimes",
+    "Container lifecycle management",
+    "Image operations",
+    "Network management",
+    "Volume management",
+    "Compose support",
+    "Type-safe ReScript core"
+  ]
+}

@@ -1,0 +1,17 @@
+/* TEAM */
+Lead: Jonathan D.A. Jewell
+GitHub: hyperpolymath
+Location: Earth
+
+/* THANKS */
+Claude AI - Development assistance
+Anthropic - MCP Protocol
+Deno - Runtime
+containerd - nerdctl
+Red Hat - podman
+
+/* SITE */
+Last update: 2025-12-12
+Language: English
+Standards: RSR (Rhodium Standard Repositories)
+Components: Deno, MCP SDK, ReScript

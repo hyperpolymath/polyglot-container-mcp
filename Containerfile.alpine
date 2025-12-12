@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+
+# polyglot-container-mcp - Alpine Base
+# Minimal Alpine Linux image (~5MB base)
+
+FROM alpine:3.21
+
+LABEL org.opencontainers.image.title="polyglot-container-mcp"
+LABEL org.opencontainers.image.description="Multi-runtime container management MCP server (nerdctl, podman, docker)"
+LABEL org.opencontainers.image.version="1.0.0-alpine"
+LABEL org.opencontainers.image.authors="Jonathan D.A. Jewell"
+LABEL org.opencontainers.image.source="https://github.com/hyperpolymath/polyglot-container-mcp"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.base.name="alpine:3.21"
+LABEL dev.mcp.server="true"
+
+# Install Deno from edge/testing or via direct download
+RUN apk add --no-cache ca-certificates curl unzip && \
+    curl -fsSL https://deno.land/install.sh | sh && \
+    mv /root/.deno/bin/deno /usr/local/bin/ && \
+    rm -rf /root/.deno && \
+    apk del curl unzip
+
+# Create non-root user
+RUN adduser -D -u 1000 mcp
+WORKDIR /app
+
+# Copy application files
+COPY --chown=mcp:mcp deno.json package.json ./
+COPY --chown=mcp:mcp index.js ./
+COPY --chown=mcp:mcp adapters/ ./adapters/
+COPY --chown=mcp:mcp src/ ./src/
+COPY --chown=mcp:mcp lib/ ./lib/ 2>/dev/null || true
+
+# Cache dependencies
+RUN deno cache --config=deno.json index.js
+
+USER mcp
+
+ENV CONTAINER_RUNTIME=auto
+
+ENTRYPOINT ["deno", "run", "--allow-run", "--allow-read", "--allow-env", "index.js"]

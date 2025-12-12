@@ -1,0 +1,40 @@
+# Deno
+.deno/
+deno.lock
+
+# ReScript
+lib/
+.bsb.lock
+.merlin
+
+# Node (if accidentally created)
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary
+tmp/
+temp/
+*.tmp
+
+# Environment (never commit secrets)
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+dist/
+build/

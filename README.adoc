@@ -1,0 +1,496 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+
+= polyglot-container-mcp
+:toc: macro
+:toc-title: Contents
+:toclevels: 3
+:icons: font
+:source-highlighter: highlight.js
+
+Multi-runtime container management MCP server supporting nerdctl, podman, and docker.
+
+image:https://img.shields.io/badge/MCP-1.0-blue[MCP Protocol]
+image:https://img.shields.io/badge/Runtime-Deno-000000[Deno]
+image:https://img.shields.io/badge/License-MIT-green[License: MIT]
+image:https://img.shields.io/badge/FOSS-First-orange[FOSS First]
+
+toc::[]
+
+== Overview
+
+*polyglot-container-mcp* provides unified access to multiple container runtimes through a single MCP (Model Context Protocol) interface. Following a FOSS-first approach, it prioritizes nerdctl and podman over Docker.
+
+=== FOSS-First Philosophy
+
+[cols="1,1,2"]
+|===
+|Runtime |Priority |Notes
+
+|**nerdctl**
+|FOSS Preferred
+|containerd CLI, Docker-compatible, daemonless
+
+|**podman**
+|FOSS
+|Red Hat's daemonless engine, rootless-first
+
+|**docker**
+|Fallback
+|Included for compatibility only
+|===
+
+== Features
+
+* **90+ tools** across 3 container runtimes
+* **Unified interface** for container, image, network, volume, and compose operations
+* **Auto-detection** of available runtimes
+* **FOSS base images**: Wolfi, Alpine, Fedora (no proprietary dependencies)
+* **Type-safe core** using ReScript
+* **Secure command execution** with whitelist validation
+
+== Quick Start
+
+=== Prerequisites
+
+At least one container runtime:
+
+[source,bash]
+----
+# FOSS Preferred: nerdctl (containerd)
+# https://github.com/containerd/nerdctl
+
+# FOSS: podman
+sudo dnf install podman  # Fedora/RHEL
+brew install podman      # macOS
+
+# Fallback: docker (if you must)
+----
+
+=== Installation
+
+==== From Source
+
+[source,bash]
+----
+git clone https://github.com/hyperpolymath/polyglot-container-mcp.git
+cd polyglot-container-mcp
+deno task start
+----
+
+==== Container Image
+
+[source,bash]
+----
+# Wolfi base (recommended)
+podman pull ghcr.io/hyperpolymath/polyglot-container-mcp:wolfi
+
+# Alpine base
+podman pull ghcr.io/hyperpolymath/polyglot-container-mcp:alpine
+
+# Fedora base
+podman pull ghcr.io/hyperpolymath/polyglot-container-mcp:fedora
+----
+
+=== Claude Desktop Configuration
+
+Add to `~/.config/claude-desktop/config.json`:
+
+[source,json]
+----
+{
+  "mcpServers": {
+    "containers": {
+      "command": "deno",
+      "args": [
+        "run",
+        "--allow-run",
+        "--allow-read",
+        "--allow-env",
+        "/path/to/polyglot-container-mcp/index.js"
+      ],
+      "env": {
+        "CONTAINER_RUNTIME": "auto"
+      }
+    }
+  }
+}
+----
+
+== Tools Reference
+
+=== Meta Tools
+
+[cols="2,4"]
+|===
+|Tool |Description
+
+|`container_list`
+|List all available runtimes and connection status
+
+|`container_detect`
+|Auto-detect and connect to available runtimes
+
+|`container_prefer`
+|Set preferred runtime (nerdctl, podman, docker, auto)
+
+|`container_help`
+|Get help for specific runtime or all tools
+
+|`container_version`
+|Get version information
+|===
+
+=== Per-Runtime Tools (~30 each)
+
+Each runtime provides tools with its name prefix (`nerdctl_*`, `podman_*`, `docker_*`):
+
+==== Container Operations
+
+[cols="2,4"]
+|===
+|Tool |Description
+
+|`*_run`
+|Run a new container
+
+|`*_ps`
+|List containers
+
+|`*_stop`
+|Stop running containers
+
+|`*_start`
+|Start stopped containers
+
+|`*_restart`
+|Restart containers
+
+|`*_rm`
+|Remove containers
+
+|`*_logs`
+|Fetch container logs
+
+|`*_exec`
+|Execute command in container
+
+|`*_inspect`
+|Inspect container details
+
+|`*_cp`
+|Copy files to/from container
+|===
+
+==== Image Operations
+
+[cols="2,4"]
+|===
+|Tool |Description
+
+|`*_images`
+|List images
+
+|`*_pull`
+|Pull image from registry
+
+|`*_push`
+|Push image to registry
+
+|`*_build`
+|Build image from Containerfile
+
+|`*_tag`
+|Tag an image
+
+|`*_rmi`
+|Remove images
+
+|`*_save`
+|Save image to tar archive
+
+|`*_load`
+|Load image from tar archive
+|===
+
+==== Network Operations
+
+[cols="2,4"]
+|===
+|Tool |Description
+
+|`*_network_ls`
+|List networks
+
+|`*_network_create`
+|Create a network
+
+|`*_network_rm`
+|Remove networks
+
+|`*_network_inspect`
+|Inspect network details
+|===
+
+==== Volume Operations
+
+[cols="2,4"]
+|===
+|Tool |Description
+
+|`*_volume_ls`
+|List volumes
+
+|`*_volume_create`
+|Create a volume
+
+|`*_volume_rm`
+|Remove volumes
+
+|`*_volume_inspect`
+|Inspect volume details
+|===
+
+==== Compose Operations
+
+[cols="2,4"]
+|===
+|Tool |Description
+
+|`*_compose_up`
+|Start compose services
+
+|`*_compose_down`
+|Stop compose services
+
+|`*_compose_ps`
+|List compose services
+
+|`*_compose_logs`
+|View compose logs
+|===
+
+==== System Operations
+
+[cols="2,4"]
+|===
+|Tool |Description
+
+|`*_info`
+|Display system information
+
+|`*_version`
+|Show version information
+
+|`*_stats`
+|Display container statistics
+
+|`*_system_prune`
+|Remove unused data
+|===
+
+== Configuration
+
+=== Environment Variables
+
+[source,bash]
+----
+# Runtime selection
+CONTAINER_RUNTIME=auto    # auto, nerdctl, podman, docker
+
+# nerdctl configuration
+NERDCTL_PATH=/usr/bin/nerdctl
+NERDCTL_NAMESPACE=default
+NERDCTL_HOST=unix:///run/containerd/containerd.sock
+NERDCTL_SNAPSHOTTER=overlayfs
+
+# podman configuration
+PODMAN_PATH=/usr/bin/podman
+PODMAN_HOST=unix:///run/user/1000/podman/podman.sock
+
+# docker configuration (fallback)
+DOCKER_PATH=/usr/bin/docker
+DOCKER_HOST=unix:///var/run/docker.sock
+----
+
+== Container Images
+
+=== Available Variants
+
+[cols="2,2,2,2"]
+|===
+|Variant |Base |Tag |Size
+
+|**Primary**
+|Wolfi
+|`:latest`, `:wolfi`
+|~50MB
+
+|**Alpine**
+|Alpine 3.21
+|`:alpine`
+|~45MB
+
+|**Fedora**
+|Fedora Minimal 41
+|`:fedora`
+|~80MB
+
+|**Cerro-Torre**
+|Cerro-Torre (Alpha)
+|`:cerro-torre`
+|TBD
+|===
+
+=== Building Locally
+
+[source,bash]
+----
+# Wolfi (default)
+podman build -t polyglot-container-mcp:wolfi -f Containerfile .
+
+# Alpine
+podman build -t polyglot-container-mcp:alpine -f Containerfile.alpine .
+
+# Fedora
+podman build -t polyglot-container-mcp:fedora -f Containerfile.fedora .
+----
+
+== Architecture
+
+[source]
+----
+polyglot-container-mcp/
+├── index.js                 # Main MCP server
+├── deno.json                # Deno configuration
+├── Containerfile            # Wolfi (primary)
+├── Containerfile.alpine     # Alpine variant
+├── Containerfile.fedora     # Fedora variant
+├── Containerfile.cerro-torre # Cerro-Torre (alpha)
+├── adapters/
+│   ├── nerdctl.js           # nerdctl adapter (30 tools)
+│   ├── podman.js            # podman adapter (30 tools)
+│   └── docker.js            # docker adapter (30 tools)
+├── src/                     # ReScript source
+│   ├── Executor.res         # Safe command execution
+│   ├── Adapter.res          # Adapter interface
+│   └── bindings/
+│       └── Deno.res         # Deno API bindings
+├── lib/es6/                 # Compiled ReScript
+├── STATE.scm                # Project state
+├── META.scm                 # Architecture decisions
+└── AI.scm                   # AI instructions
+----
+
+== Nested Containers
+
+All runtimes support nested containers (containers running inside containers):
+
+=== Using the `nested` Flag
+
+The simplest way to run nested containers:
+
+[source,bash]
+----
+# nerdctl - mounts containerd socket
+nerdctl_run image="alpine" nested=true
+
+# podman - mounts podman socket (rootless-friendly)
+podman_run image="alpine" nested=true userns="keep-id"
+
+# docker - mounts docker socket (DinD)
+docker_run image="alpine" nested=true
+----
+
+=== Manual Configuration
+
+For fine-grained control:
+
+[cols="2,4"]
+|===
+|Parameter |Description
+
+|`privileged`
+|Run in privileged mode (required for some nested setups)
+
+|`securityOpt`
+|Security options, e.g., "label=disable"
+
+|`cgroupns`
+|Cgroup namespace mode: "host" or "private"
+
+|`userns`
+|(Podman) User namespace mode, e.g., "keep-id"
+|===
+
+=== Runtime-Specific Notes
+
+**nerdctl**: Mounts `/run/containerd/containerd.sock` and `/var/lib/containerd`
+
+**podman**: Mounts user's podman socket, sets `CONTAINER_HOST`, disables SELinux labels. Best rootless support with `userns=keep-id`.
+
+**docker**: Traditional Docker-in-Docker via `/var/run/docker.sock`. Requires privileged mode.
+
+== Security
+
+* **Command whitelist**: Only specific container commands allowed
+* **Argument sanitization**: Shell metacharacters stripped
+* **No shell execution**: Uses `Deno.Command` directly
+* **Non-root containers**: All images run as non-root by default
+
+See link:SECURITY.adoc[SECURITY.adoc] for security policy and reporting vulnerabilities.
+
+== Development
+
+=== Prerequisites
+
+* Deno 2.0+
+* ReScript 11+ (for type-safe core)
+* At least one container runtime
+
+=== Commands
+
+[source,bash]
+----
+# Start server
+deno task start
+
+# Development with watch
+deno task dev
+
+# Build ReScript
+deno task res:build
+
+# Watch ReScript
+deno task res:watch
+
+# Format code
+deno fmt
+----
+
+=== Adding a New Adapter
+
+1. Create `adapters/yourruntime.js` (or `src/adapters/YourRuntime.res`)
+2. Export: `name`, `description`, `connect()`, `disconnect()`, `isConnected()`, `tools`
+3. Follow existing adapter patterns
+4. Add SPDX header
+5. Import in `index.js`
+6. Document environment variables
+
+== Related Projects
+
+* https://github.com/hyperpolymath/polyglot-db-mcp[polyglot-db-mcp] - Multi-database MCP server
+* https://github.com/hyperpolymath/Cerro-Torre[Cerro-Torre] - Supply-chain verified container distribution
+
+== License
+
+MIT License - see link:LICENSE[LICENSE] file.
+
+== Contributing
+
+See link:CONTRIBUTING.adoc[CONTRIBUTING.adoc] for contribution guidelines.
+
+== Feedback
+
+Report issues and request features at: +
+https://github.com/hyperpolymath/polyglot-container-mcp/issues

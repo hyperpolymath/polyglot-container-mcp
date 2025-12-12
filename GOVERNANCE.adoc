@@ -1,0 +1,54 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+= Governance
+:toc:
+
+== Project Structure
+
+polyglot-container-mcp is maintained by hyperpolymath with community contributions welcome.
+
+== Decision Making
+
+=== Technical Decisions
+
+* Minor changes: Maintainer discretion
+* Major changes: Issue discussion required
+* Breaking changes: Community input period (minimum 7 days)
+
+=== Roles
+
+==== Maintainer
+
+* Full commit access
+* Release authority
+* Final decision on disputes
+
+==== Contributor
+
+* Submit pull requests
+* Participate in discussions
+* Report issues
+
+== Contribution Process
+
+1. Open issue for discussion (major changes)
+2. Fork and develop
+3. Submit pull request
+4. Review and iterate
+5. Merge by maintainer
+
+== FOSS-First Philosophy
+
+This project prioritizes Free and Open Source Software:
+
+* nerdctl and podman are preferred over Docker
+* Container images use FOSS bases (Wolfi, Alpine, Fedora)
+* All contributions must be MIT-licensed
+
+== Code of Conduct
+
+All participants must follow the link:CODE_OF_CONDUCT.adoc[Code of Conduct].
+
+== Changes to Governance
+
+This document may be updated by the maintainer with community notification.
