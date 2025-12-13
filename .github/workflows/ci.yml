@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 
 name: CI
@@ -9,12 +9,16 @@ on:
   pull_request:
     branches: [main]
 
+permissions: read-all
+
 jobs:
   language-policy:
     name: Enforce Language Policy
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Check for prohibited TypeScript files
         run: |
@@ -58,11 +62,13 @@ jobs:
   rescript-build:
     name: Build ReScript
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           node-version: '20'
           cache: 'npm'
@@ -86,16 +92,18 @@ jobs:
     name: Deno Compatibility Check
     runs-on: ubuntu-latest
     needs: rescript-build
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Setup Deno
-        uses: denoland/setup-deno@v2
+        uses: denoland/setup-deno@ed133a5cffbd59ae4e5397773688689858a22d80 # v2.0.0
         with:
           deno-version: v1.x
 
       - name: Setup Node.js (for ReScript)
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           node-version: '20'
           cache: 'npm'
@@ -113,11 +121,13 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Setup Deno
-        uses: denoland/setup-deno@v2
+        uses: denoland/setup-deno@ed133a5cffbd59ae4e5397773688689858a22d80 # v2.0.0
         with:
           deno-version: v1.x
 
