@@ -649,6 +649,100 @@ export class StreamableHttpTransport {
   }
 }
 
+/**
+ * McpHttpAdapter - Bridges MCP Server to HTTP transport
+ * Wraps an MCP server instance to handle HTTP requests
+ */
+export class McpHttpAdapter {
+  constructor(mcpServer) {
+    this.server = mcpServer;
+    this.sessions = new Map();
+  }
+
+  /**
+   * Handle an incoming JSON-RPC request
+   * @param {Object} message - JSON-RPC message
+   * @param {string} sessionId - Session identifier
+   * @returns {Promise<Object>} JSON-RPC response
+   */
+  async handleRequest(message, sessionId = "default") {
+    // Try to use the server's internal handler if available
+    if (this.server._handleRequest) {
+      return await this.server._handleRequest(message);
+    }
+
+    // Handle standard MCP methods
+    const { method, params, id } = message;
+
+    try {
+      let result;
+
+      switch (method) {
+        case "initialize":
+          result = await this.handleInitialize(params);
+          break;
+        case "tools/list":
+          result = await this.handleToolsList();
+          break;
+        case "tools/call":
+          result = await this.handleToolsCall(params);
+          break;
+        case "ping":
+          result = {};
+          break;
+        default:
+          return {
+            jsonrpc: "2.0",
+            id,
+            error: {
+              code: -32601,
+              message: `Method not found: ${method}`,
+            },
+          };
+      }
+
+      return { jsonrpc: "2.0", id, result };
+    } catch (error) {
+      return {
+        jsonrpc: "2.0",
+        id,
+        error: {
+          code: -32603,
+          message: error.message || "Internal error",
+        },
+      };
+    }
+  }
+
+  async handleInitialize(params) {
+    return {
+      protocolVersion: "2025-06-18",
+      capabilities: {
+        tools: { listChanged: true },
+      },
+      serverInfo: {
+        name: this.server.name || "mcp-server",
+        version: this.server.version || "1.0.0",
+      },
+    };
+  }
+
+  async handleToolsList() {
+    if (this.server.getTools) {
+      return { tools: await this.server.getTools() };
+    }
+    return { tools: [] };
+  }
+
+  async handleToolsCall(params) {
+    const { name, arguments: args } = params;
+    if (this.server.callTool) {
+      return await this.server.callTool(name, args);
+    }
+    throw new Error(`Tool not found: ${name}`);
+  }
+}
+
 // Export utilities for external use
 export {
   CircuitBreaker,
@@ -659,4 +753,4 @@ export {
   LogLevel,
 };
 
-export default { StreamableHttpTransport, CircuitBreaker, RateLimiter };
+export default { StreamableHttpTransport, CircuitBreaker, RateLimiter, McpHttpAdapter };
