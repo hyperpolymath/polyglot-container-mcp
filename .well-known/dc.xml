@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <dc:title>poly-container-mcp</dc:title>
+  <dc:creator>hyperpolymath</dc:creator>
+  <dc:subject>MCP, containers, nerdctl, podman, docker</dc:subject>
+  <dc:description>Multi-runtime container management MCP server supporting nerdctl, podman, and docker with FOSS-first approach.</dc:description>
+  <dc:publisher>hyperpolymath</dc:publisher>
+  <dc:date>2025-12-16</dc:date>
+  <dc:type>Software</dc:type>
+  <dc:format>application/javascript</dc:format>
+  <dc:identifier>https://github.com/hyperpolymath/poly-container-mcp</dc:identifier>
+  <dc:language>en</dc:language>
+  <dc:rights>MIT</dc:rights>
+</metadata>

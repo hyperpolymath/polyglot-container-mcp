@@ -10,9 +10,9 @@
 
 Multi-runtime container management MCP server supporting nerdctl, podman, and docker.
 
-image:https://img.shields.io/badge/MCP-1.0-blue[MCP Protocol]
-image:https://img.shields.io/badge/Runtime-Deno-000000[Deno]
-image:https://img.shields.io/badge/License-MIT-green[License: MIT]
+image:https://img.shields.io/badge/RSR-compliant-gold[RSR Compliant,link=https://github.com/hyperpolymath/rhodium-standard-repositories]
+image:https://img.shields.io/badge/MCP-server-blue[MCP Server,link=https://github.com/modelcontextprotocol]
+image:https://img.shields.io/badge/license-MIT-green[License]
 image:https://img.shields.io/badge/FOSS-First-orange[FOSS First]
 
 toc::[]
