@@ -1,4 +1,4 @@
-;; SPDX-License-Identifier: AGPL-3.0-or-later
+;; SPDX-License-Identifier: PMPL-1.0-or-later
 ;; SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 ;; ECOSYSTEM.scm — poly-container-mcp
 
@@ -17,4 +17,9 @@
              (relationship "standard")))
 
   (what-this-is "// SPDX-License-Identifier: MIT")
-  (what-this-is-not "- NOT exempt from RSR compliance"))
+  (what-this-is-not "- NOT exempt from RSR compliance")
+  (opsm-integration
+    (relationship "core")
+    (description "container substrate integration for OPSM.")
+    (direction "opsm -> poly-container-mcp"))
+)

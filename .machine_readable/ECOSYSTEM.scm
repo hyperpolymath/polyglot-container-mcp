@@ -1,20 +1,25 @@
-;; SPDX-License-Identifier: AGPL-3.0-or-later
-;; ECOSYSTEM.scm - Ecosystem position for poly-container-mcp
-;; Media-Type: application/vnd.ecosystem+scm
+;; SPDX-License-Identifier: PMPL-1.0-or-later
+;; SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+;; ECOSYSTEM.scm — poly-container-mcp
 
 (ecosystem
-  (version "1.0")
+  (version "1.0.0")
   (name "poly-container-mcp")
-  (type "")
-  (purpose "")
+  (type "project")
+  (purpose "// SPDX-License-Identifier: MIT")
 
   (position-in-ecosystem
-    (category "")
-    (subcategory "")
-    (unique-value ()))
+    "Part of hyperpolymath ecosystem. Follows RSR guidelines.")
 
-  (related-projects ())
+  (related-projects
+    (project (name "rhodium-standard-repositories")
+             (url "https://github.com/hyperpolymath/rhodium-standard-repositories")
+             (relationship "standard")))
 
-  (what-this-is ())
-
-  (what-this-is-not ()))
+  (what-this-is "// SPDX-License-Identifier: MIT")
+  (what-this-is-not "- NOT exempt from RSR compliance")
+  (opsm-integration
+    (relationship "core")
+    (description "container substrate integration for OPSM.")
+    (direction "opsm -> poly-container-mcp"))
+)

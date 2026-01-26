@@ -1,4 +1,4 @@
-;; SPDX-License-Identifier: AGPL-3.0-or-later
+;; SPDX-License-Identifier: PMPL-1.0-or-later
 ;; SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 ;;; META.scm — poly-container-mcp
 
@@ -22,3 +22,5 @@
 
 (define design-rationale
   '((why-rsr "RSR ensures consistency, security, and maintainability.")))
+
+(define opsm-link "OPSM link: container substrate integration for OPSM.")

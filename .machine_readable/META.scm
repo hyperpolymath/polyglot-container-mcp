@@ -1,17 +1,26 @@
-;; SPDX-License-Identifier: AGPL-3.0-or-later
-;; META.scm - Meta-level information for poly-container-mcp
-;; Media-Type: application/meta+scheme
+;; SPDX-License-Identifier: PMPL-1.0-or-later
+;; SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+;;; META.scm — poly-container-mcp
 
-(meta
-  (architecture-decisions ())
+(define-module (poly-container-mcp meta)
+  #:export (architecture-decisions development-practices design-rationale))
 
-  (development-practices
-    (code-style ())
-    (security
-      (principle "Defense in depth"))
-    (testing ())
-    (versioning "SemVer")
-    (documentation "AsciiDoc")
-    (branching "main for stable"))
+(define architecture-decisions
+  '((adr-001
+     (title . "RSR Compliance")
+     (status . "accepted")
+     (date . "2025-12-15")
+     (context . "// SPDX-License-Identifier: MIT")
+     (decision . "Follow Rhodium Standard Repository guidelines")
+     (consequences . ("RSR Gold target" "SHA-pinned actions" "SPDX headers" "Multi-platform CI")))))
 
-  (design-rationale ()))
+(define development-practices
+  '((code-style (languages . ("JavaScript" "ReScript" "Shell" "TypeScript")) (formatter . "auto-detect") (linter . "auto-detect"))
+    (security (sast . "CodeQL") (credentials . "env vars only"))
+    (testing (coverage-minimum . 70))
+    (versioning (scheme . "SemVer 2.0.0"))))
+
+(define design-rationale
+  '((why-rsr "RSR ensures consistency, security, and maintainability.")))
+
+(define opsm-link "OPSM link: container substrate integration for OPSM.")
