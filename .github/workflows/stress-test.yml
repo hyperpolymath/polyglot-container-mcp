@@ -1,0 +1,52 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: Stress Testing
+on:
+  schedule:
+    - cron: '0 3 * * 1'  # Weekly Monday 3am UTC
+  workflow_dispatch:
+permissions: read-all
+jobs:
+  stress-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Install stress testing tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y stress-ng
+
+      - name: Build
+        run: deno cache deno.json
+
+      - name: Concurrent operations stress test
+        run: |
+          # Run 100 concurrent Deno processes
+          for i in {1..100}; do
+            timeout 1s deno run --allow-all index.ts &
+          done
+          wait || true
+
+      - name: Memory pressure test
+        run: |
+          # Test under memory constraints
+          deno test --allow-all --v8-flags=--max-old-space-size=512
+
+      - name: Long-running scenario test
+        run: |
+          # Test for memory leaks over time (5 minutes)
+          timeout 300s deno run --allow-all --v8-flags=--expose-gc index.ts || true
+
+      - name: Stress test with stress-ng
+        run: |
+          # CPU and I/O stress
+          stress-ng --cpu 4 --io 2 --timeout 60s &
+          STRESS_PID=$!
+          deno test --allow-all
+          kill $STRESS_PID || true

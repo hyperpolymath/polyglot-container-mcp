@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: PMPL-1.0-or-later
 // SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 
 = Contributing to polyglot-container-mcp
@@ -74,7 +74,7 @@ All source files must include SPDX headers:
 
 [source,javascript]
 ----
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: PMPL-1.0-or-later
 // SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 ----
 
@@ -113,7 +113,7 @@ We welcome adapters for FOSS container runtimes:
 
 [source,javascript]
 ----
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: PMPL-1.0-or-later
 // SPDX-FileCopyrightText: 2025 Your Name
 
 export const name = "runtime";

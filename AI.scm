@@ -2,7 +2,7 @@
 ;;; AI.scm — AI Assistant Instructions
 ;;; ==================================================
 ;;;
-;;; SPDX-License-Identifier: MIT
+;;; SPDX-License-Identifier: PMPL-1.0-or-later
 ;;; Copyright (c) 2025 Jonathan D.A. Jewell
 ;;;
 ;;; Instructions for AI assistants interacting with this project
